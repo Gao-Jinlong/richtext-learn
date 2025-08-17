@@ -4,10 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "type-check": "tsc --build",
+    "type-check:watch": "tsc --build --watch",
+    "clean": "tsc --build --clean"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.11.0"
+  "packageManager": "pnpm@10.11.0",
+  "workspaces": [
+    "packages/*"
+  ]
 }
