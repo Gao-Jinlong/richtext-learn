@@ -16,8 +16,18 @@ import {
   $createCustomParagraphNode,
   CustomParagraphNode,
 } from "./node/CustomParagraphNode";
+import { $createCustomTextNode, CustomTextNode } from "./node/CustomTextNode";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { registerStyleState } from "./styleState";
+import { useEffect } from "react";
 
 const placeholder = "Enter some rich text...";
+
+function StyleStatePlugin() {
+  const [editor] = useLexicalComposerContext();
+  useEffect(() => registerStyleState(editor), [editor]);
+  return null;
+}
 
 function App() {
   const editorConfig: InitialConfigType = {
@@ -30,6 +40,11 @@ function App() {
         replace: ParagraphNode,
         with: () => $createCustomParagraphNode(),
         withKlass: CustomParagraphNode,
+      },
+      {
+        replace: TextNode,
+        with: () => $createCustomTextNode(),
+        withKlass: CustomTextNode,
       },
     ],
     onError(error: Error) {
