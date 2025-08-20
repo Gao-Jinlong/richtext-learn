@@ -3,7 +3,6 @@ import {
   type InitialConfigType,
   LexicalComposer,
 } from "@lexical/react/LexicalComposer";
-import { ParagraphNode, TextNode } from "lexical";
 import ExampleTheme from "./ExampleTheme";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
@@ -17,17 +16,9 @@ import {
   CustomParagraphNode,
 } from "./node/CustomParagraphNode";
 import { $createCustomTextNode, CustomTextNode } from "./node/CustomTextNode";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { registerStyleState } from "./styleState";
-import { useEffect } from "react";
+import { ParagraphNode, TextNode } from "lexical";
 
 const placeholder = "Enter some rich text...";
-
-function StyleStatePlugin() {
-  const [editor] = useLexicalComposerContext();
-  useEffect(() => registerStyleState(editor), [editor]);
-  return null;
-}
 
 function App() {
   const editorConfig: InitialConfigType = {
@@ -35,6 +26,7 @@ function App() {
     nodes: [
       ParagraphNode,
       TextNode,
+      CustomTextNode,
       CustomParagraphNode,
       {
         replace: ParagraphNode,
