@@ -75,7 +75,7 @@ export function registerCustomState(editor: LexicalEditor) {
     editor.registerCommand(
       CUSTOM_STATE_COMMAND,
       (payload) => {
-        console.log("CUSTOM_STATE_COMMAND", payload);
+        $patchCustomState(payload);
         return true;
       },
       COMMAND_PRIORITY_EDITOR

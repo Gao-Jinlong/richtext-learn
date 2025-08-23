@@ -17,9 +17,9 @@ import {
 } from "./node/CustomParagraphNode";
 import { $createCustomTextNode, CustomTextNode } from "./node/CustomTextNode";
 import { ParagraphNode, TextNode } from "lexical";
+import CustomStatePlugin from "./plugins/CustomState/CustomStatePlugin";
 
 const placeholder = "Enter some rich text...";
-
 function App() {
   const editorConfig: InitialConfigType = {
     namespace: "Node Replacement Demo",
@@ -65,6 +65,7 @@ function App() {
           <HistoryPlugin />
           <AutoFocusPlugin />
           <TreeViewPlugin />
+          <CustomStatePlugin />
         </div>
       </div>
     </LexicalComposer>
