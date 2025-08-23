@@ -2,6 +2,7 @@ import { mergeRegister } from "@lexical/utils";
 import {
   $getPreviousSelection,
   $getSelection,
+  $getState,
   $isRangeSelection,
   $isTextNode,
   $setSelection,
@@ -37,6 +38,12 @@ export function $setCustomState<T extends LexicalNode>(
 ) {
   return $setState(node, customState, valueOrUpdater);
 }
+export function $getCustomState<T extends LexicalNode>(
+  node: T
+): CustomObject | null {
+  return $getState(node, customState);
+}
+
 export function $patchCustomState(
   customObjectOrCallback:
     | CustomObject

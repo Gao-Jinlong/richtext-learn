@@ -1,7 +1,24 @@
-import { createContext, use, useEffect, useReducer, useState } from "react";
-import type { EditorState, LexicalEditor, NodeKey } from "lexical";
+import {
+  createContext,
+  use,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
+import {
+  $getNodeByKey,
+  $getSelection,
+  $getState,
+  $isElementNode,
+  $isRangeSelection,
+  $isTextNode,
+  type EditorState,
+  type LexicalEditor,
+  type NodeKey,
+} from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import type { CustomObject } from "./customState";
+import { $getCustomState, customState, type CustomObject } from "./customState";
 
 const EditorStateContext = createContext<EditorState | undefined>(undefined);
 function useEditorState() {
@@ -30,13 +47,53 @@ export function CustomStateViewPlugin() {
 }
 
 function CustomStateView() {
-  const collectionState = useEditorCollectionState;
+  const collectionState = useEditorCollectionState();
+  const { editor, editorState, focusNodeKey } = collectionState;
+  const editorRef = useRef(editor);
+  const [obj, setObj] = useState<CustomObject | null>(null);
 
-  return <div></div>;
+  useEffect(() => {
+    editorRef.current = editor;
+  }, [editor]);
+
+  useEffect(() => {
+    editor.read(() => {
+      if (focusNodeKey !== null) {
+        const node = $getNodeByKey(focusNodeKey);
+        if ($isTextNode(node)) {
+          const obj = $getCustomState(node);
+          setObj(obj);
+        }
+      }
+    });
+  }, [editor, focusNodeKey]);
+
+  useEffect(() => {
+    if (!focusNodeKey) return;
+
+    return editor.registerUpdateListener(() => {
+      editor.read(() => {
+        const node = $getNodeByKey(focusNodeKey);
+        if ($isTextNode(node)) {
+          const obj = $getCustomState(node);
+          setObj(obj);
+        }
+      });
+    });
+  }, [editor, focusNodeKey]);
+
+  return (
+    <div>
+      <div>focusNodeKey: {focusNodeKey}</div>
+      <div>editorState: {JSON.stringify(obj)}</div>
+    </div>
+  );
 }
 
 interface EditorCollectionState {
-  customState: CustomObject;
+  editor: LexicalEditor;
+  editorState: EditorState;
+  focusNodeKey: null | NodeKey;
 }
 
 function editorCollectionReducer(
@@ -45,15 +102,40 @@ function editorCollectionReducer(
 ) {
   let nextState = { ...state, ...action };
   if (action.editor && action.editor !== state.editor) {
-    nextState = initEditorCollection(nextState);
+    nextState = {
+      editor: action.editor,
+      editorState: action.editorState!,
+      focusNodeKey: null,
+    };
   }
+
   nextState.focusNodeKey = nextFocusNodeKey(nextState);
+
   return nextState;
+}
+
+function nextFocusNodeKey(state: EditorCollectionState): null | NodeKey {
+  return state.editorState.read(() => {
+    const selection = $getSelection();
+    return selection && $isRangeSelection(selection)
+      ? selection.focus.getNode().getKey()
+      : null;
+  });
 }
 
 function useEditorCollectionState() {
   const [editor] = useLexicalComposerContext();
   const editorState = useEditorState();
 
-  const [state, dispatch] = useReducer(editorCollectionReducer);
+  const [state, dispatch] = useReducer(editorCollectionReducer, {
+    editor,
+    editorState,
+    focusNodeKey: null,
+  });
+
+  useEffect(() => {
+    dispatch({ editor, editorState });
+  }, [editor, editorState]);
+
+  return state;
 }

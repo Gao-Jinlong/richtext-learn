@@ -18,6 +18,7 @@ import {
 import { $createCustomTextNode, CustomTextNode } from "./node/CustomTextNode";
 import { ParagraphNode, TextNode } from "lexical";
 import CustomStatePlugin from "./plugins/CustomState/CustomStatePlugin";
+import { CustomStateViewPlugin } from "./plugins/CustomState/CustomStateViewPlugin";
 
 const placeholder = "Enter some rich text...";
 function App() {
@@ -66,6 +67,7 @@ function App() {
           <AutoFocusPlugin />
           <TreeViewPlugin />
           <CustomStatePlugin />
+          <CustomStateViewPlugin />
         </div>
       </div>
     </LexicalComposer>
