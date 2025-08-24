@@ -15,7 +15,12 @@ import {
   $createCustomParagraphNode,
   CustomParagraphNode,
 } from "./node/CustomParagraphNode";
-import { $createCustomTextNode, CustomTextNode } from "./node/CustomTextNode";
+import {
+  $createCustomTextNode,
+  CustomTextNode,
+  CustomTextNodeListenerPlugin,
+  useCustomTextNodeUpdate,
+} from "./node/CustomTextNode";
 import { ParagraphNode, TextNode } from "lexical";
 import CustomStatePlugin from "./plugins/CustomState/CustomStatePlugin";
 import { CustomStateViewPlugin } from "./plugins/CustomState/CustomStateViewPlugin";
@@ -68,6 +73,7 @@ function App() {
           <TreeViewPlugin />
           <CustomStatePlugin />
           <CustomStateViewPlugin />
+          <CustomTextNodeListenerPlugin />
         </div>
       </div>
     </LexicalComposer>
