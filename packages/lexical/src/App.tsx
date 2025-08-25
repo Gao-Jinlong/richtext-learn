@@ -24,6 +24,8 @@ import {
 import { ParagraphNode, TextNode } from "lexical";
 import CustomStatePlugin from "./plugins/CustomState/CustomStatePlugin";
 import { CustomStateViewPlugin } from "./plugins/CustomState/CustomStateViewPlugin";
+import EmojisPlugin from "./plugins/EmojisPlugin";
+import { EmojiNode } from "./node/EmojiNode";
 
 const placeholder = "Enter some rich text...";
 function App() {
@@ -32,6 +34,7 @@ function App() {
     nodes: [
       ParagraphNode,
       TextNode,
+      EmojiNode,
       CustomTextNode,
       CustomParagraphNode,
       {
@@ -74,6 +77,7 @@ function App() {
           <CustomStatePlugin />
           <CustomStateViewPlugin />
           <CustomTextNodeListenerPlugin />
+          <EmojisPlugin />
         </div>
       </div>
     </LexicalComposer>
