@@ -26,6 +26,8 @@ import CustomStatePlugin from "./plugins/CustomState/CustomStatePlugin";
 import { CustomStateViewPlugin } from "./plugins/CustomState/CustomStateViewPlugin";
 import EmojisPlugin from "./plugins/EmojisPlugin";
 import { EmojiNode } from "./node/EmojiNode";
+import LexicalAutoLinkPlugin from "./plugins/AutoLinkPlugin";
+import { AutoLinkNode } from "lexical/LexicalAutoLinkPlugin";
 
 const placeholder = "Enter some rich text...";
 function App() {
@@ -37,16 +39,17 @@ function App() {
       EmojiNode,
       CustomTextNode,
       CustomParagraphNode,
+      AutoLinkNode,
       {
         replace: ParagraphNode,
         with: () => $createCustomParagraphNode(),
         withKlass: CustomParagraphNode,
       },
-      {
-        replace: TextNode,
-        with: () => $createCustomTextNode(),
-        withKlass: CustomTextNode,
-      },
+      // {
+      //   replace: TextNode,
+      //   with: () => $createCustomTextNode(),
+      //   withKlass: CustomTextNode,
+      // },
     ],
     onError(error: Error) {
       throw error;
@@ -78,6 +81,7 @@ function App() {
           <CustomStateViewPlugin />
           <CustomTextNodeListenerPlugin />
           <EmojisPlugin />
+          <LexicalAutoLinkPlugin />
         </div>
       </div>
     </LexicalComposer>
