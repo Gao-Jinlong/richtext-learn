@@ -27,7 +27,7 @@ import { CustomStateViewPlugin } from "./plugins/CustomState/CustomStateViewPlug
 import EmojisPlugin from "./plugins/EmojisPlugin";
 import { EmojiNode } from "./node/EmojiNode";
 import LexicalAutoLinkPlugin from "./plugins/AutoLinkPlugin";
-import { AutoLinkNode } from "lexical/LexicalAutoLinkPlugin";
+import { LinkNode } from "./node/LinkNode";
 
 const placeholder = "Enter some rich text...";
 function App() {
@@ -39,7 +39,7 @@ function App() {
       EmojiNode,
       CustomTextNode,
       CustomParagraphNode,
-      AutoLinkNode,
+      LinkNode,
       {
         replace: ParagraphNode,
         with: () => $createCustomParagraphNode(),
