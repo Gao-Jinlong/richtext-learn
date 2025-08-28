@@ -14,6 +14,12 @@ importers:
 
   packages/lexical:
     dependencies:
+      '@lexical/hashtag':
+        specifier: ^0.34.0
+        version: 0.34.0
+      '@lexical/link':
+        specifier: ^0.34.0
+        version: 0.34.0
       '@lexical/react':
         specifier: ^0.34.0
         version: 0.34.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(yjs@13.6.27)

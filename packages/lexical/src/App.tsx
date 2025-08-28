@@ -26,8 +26,11 @@ import CustomStatePlugin from "./plugins/CustomState/CustomStatePlugin";
 import { CustomStateViewPlugin } from "./plugins/CustomState/CustomStateViewPlugin";
 import EmojisPlugin from "./plugins/EmojisPlugin";
 import { EmojiNode } from "./node/EmojiNode";
+import { LinkNode, AutoLinkNode } from "@lexical/link";
 import LexicalAutoLinkPlugin from "./plugins/AutoLinkPlugin";
-import { LinkNode } from "./node/LinkNode";
+// import { HashtagPlugin } from "@lexiashtag";
+import { HashtagNode } from "@lexical/hashtag";
+import { HashtagPlugin } from "./plugins/HashtagPlugin";
 
 const placeholder = "Enter some rich text...";
 function App() {
@@ -40,6 +43,8 @@ function App() {
       CustomTextNode,
       CustomParagraphNode,
       LinkNode,
+      AutoLinkNode,
+      HashtagNode,
       {
         replace: ParagraphNode,
         with: () => $createCustomParagraphNode(),
@@ -82,6 +87,7 @@ function App() {
           <CustomTextNodeListenerPlugin />
           <EmojisPlugin />
           <LexicalAutoLinkPlugin />
+          <HashtagPlugin />
         </div>
       </div>
     </LexicalComposer>
