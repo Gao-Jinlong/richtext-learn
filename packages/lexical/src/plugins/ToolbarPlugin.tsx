@@ -37,6 +37,8 @@ export default function ToolbarPlugin() {
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
 
+  const [isEditable, setIsEditable] = useState(false);
+
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -67,6 +69,17 @@ export default function ToolbarPlugin() {
     );
   }, [editor, $updateToolbar]);
 
+  useEffect(() => {
+    setIsEditable(editor.isEditable());
+    return editor.registerEditableListener((isEditable) => {
+      setIsEditable(isEditable);
+    });
+  }, [editor]);
+
+  const handleEdit = useCallback(() => {
+    editor.setEditable(!isEditable);
+  }, [editor, isEditable]);
+
   return (
     <div className="toolbar" ref={toolbarRef}>
       <button
@@ -81,6 +94,7 @@ export default function ToolbarPlugin() {
         <Plus />
       </button>
       <Divider />
+      <button onClick={handleEdit}>{isEditable ? "编辑" : "预览"}</button>
     </div>
   );
 }
