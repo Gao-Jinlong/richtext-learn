@@ -31,6 +31,7 @@ import LexicalAutoLinkPlugin from "./plugins/AutoLinkPlugin";
 // import { HashtagPlugin } from "@lexiashtag";
 import { HashtagNode } from "@lexical/hashtag";
 import { HashtagPlugin } from "./plugins/HashtagPlugin";
+import ExtendedTextNode from "./node/ExtendedTextNode";
 
 const placeholder = "Enter some rich text...";
 function App() {
@@ -50,6 +51,12 @@ function App() {
         with: () => $createCustomParagraphNode(),
         withKlass: CustomParagraphNode,
       },
+      ExtendedTextNode,
+      {
+        replace: TextNode,
+        with: (node: TextNode) => new ExtendedTextNode(node.__text),
+        withKlass: ExtendedTextNode,
+      },
       // {
       //   replace: TextNode,
       //   with: () => $createCustomTextNode(),
@@ -63,34 +70,38 @@ function App() {
   };
 
   return (
-    <LexicalComposer initialConfig={editorConfig}>
-      <div className="editor-container">
-        <ToolbarPlugin />
-        <div className="editor-inner">
-          <RichTextPlugin
-            contentEditable={
-              <ContentEditable
-                className="editor-input"
-                aria-placeholder={placeholder}
-                placeholder={
-                  <div className="editor-placeholder">{placeholder}</div>
-                }
-              />
-            }
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          <HistoryPlugin />
-          <AutoFocusPlugin />
-          <TreeViewPlugin />
-          <CustomStatePlugin />
-          <CustomStateViewPlugin />
-          <CustomTextNodeListenerPlugin />
-          <EmojisPlugin />
-          <LexicalAutoLinkPlugin />
-          <HashtagPlugin />
+    <>
+      <LexicalComposer initialConfig={editorConfig}>
+        <div className="editor-container">
+          <ToolbarPlugin />
+          <div className="editor-inner">
+            <RichTextPlugin
+              contentEditable={
+                <ContentEditable
+                  className="editor-input"
+                  aria-placeholder={placeholder}
+                  placeholder={
+                    <div className="editor-placeholder">{placeholder}</div>
+                  }
+                />
+              }
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            <HistoryPlugin />
+            <AutoFocusPlugin />
+            <TreeViewPlugin />
+            <CustomStatePlugin />
+            <CustomStateViewPlugin />
+            <CustomTextNodeListenerPlugin />
+            <EmojisPlugin />
+            <LexicalAutoLinkPlugin />
+            <HashtagPlugin />
+          </div>
         </div>
-      </div>
-    </LexicalComposer>
+      </LexicalComposer>
+
+      <div id="preview"></div>
+    </>
   );
 }
 

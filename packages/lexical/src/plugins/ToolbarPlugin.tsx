@@ -8,7 +8,9 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { mergeRegister } from "@lexical/utils";
 import {
+  $getRoot,
   $getSelection,
+  $insertNodes,
   $isRangeSelection,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
@@ -22,6 +24,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CUSTOM_STATE_COMMAND } from "./CustomState/customState";
 import { Plus } from "lucide-react";
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
 
 function Divider() {
   return <div className="divider" />;
@@ -80,6 +83,29 @@ export default function ToolbarPlugin() {
     editor.setEditable(!isEditable);
   }, [editor, isEditable]);
 
+  const handleToHTML = useCallback(() => {
+    editor.read(() => {
+      const htmlString = $generateHtmlFromNodes(editor, null);
+      console.log(htmlString);
+      document.getElementById("preview")!.innerHTML = htmlString;
+    });
+  }, [editor]);
+
+  const handleFromHTML = useCallback(() => {
+    editor.update(() => {
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(
+        document.getElementById("preview")!.innerHTML,
+        "text/html"
+      );
+
+      const nodes = $generateNodesFromDOM(editor, dom);
+
+      $getRoot().select();
+      $insertNodes(nodes);
+    });
+  }, [editor]);
+
   return (
     <div className="toolbar" ref={toolbarRef}>
       <button
@@ -95,6 +121,8 @@ export default function ToolbarPlugin() {
       </button>
       <Divider />
       <button onClick={handleEdit}>{isEditable ? "编辑" : "预览"}</button>
+      <button onClick={handleToHTML}>toHTML</button>
+      <button onClick={handleFromHTML}>fromHTML</button>
     </div>
   );
 }
