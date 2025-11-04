@@ -16,10 +16,8 @@ import {
   CustomParagraphNode,
 } from "./node/CustomParagraphNode";
 import {
-  $createCustomTextNode,
   CustomTextNode,
   CustomTextNodeListenerPlugin,
-  useCustomTextNodeUpdate,
 } from "./node/CustomTextNode";
 import { ParagraphNode, TextNode } from "lexical";
 import CustomStatePlugin from "./plugins/CustomState/CustomStatePlugin";
@@ -57,11 +55,6 @@ function App() {
         with: (node: TextNode) => new ExtendedTextNode(node.__text),
         withKlass: ExtendedTextNode,
       },
-      // {
-      //   replace: TextNode,
-      //   with: () => $createCustomTextNode(),
-      //   withKlass: CustomTextNode,
-      // },
     ],
     onError(error: Error) {
       throw error;

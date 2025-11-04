@@ -10,12 +10,12 @@
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.3"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.11.0",
+  "packageManager": "pnpm@10.20.0",
   "workspaces": [
     "packages/*"
   ]
