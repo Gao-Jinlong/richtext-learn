@@ -9,6 +9,7 @@
 import type { JSX } from 'react'
 
 import katex from 'katex'
+import 'katex/dist/katex.min.css'
 import { useEffect, useRef } from 'react'
 
 export default function KatexRenderer({

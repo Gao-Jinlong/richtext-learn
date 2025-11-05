@@ -20,7 +20,6 @@ import modernTheme from '@/lib/lexical/theme/ModernEditorTheme'
 import { ReactExtension } from '@lexical/react/ReactExtension'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import { EquationNode } from '@/lib/lexical/node/EquationNode'
-import { ClientOnly } from '@tanstack/react-router'
 
 function onError(error: Error) {
   console.error('Lexical Editor Error:', error)
