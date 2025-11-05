@@ -20,6 +20,8 @@ import modernTheme from '@/lib/lexical/theme/ModernEditorTheme'
 import { ReactExtension } from '@lexical/react/ReactExtension'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import { EquationNode } from '@/lib/lexical/node/EquationNode'
+import MarkdownExtension from '@/lib/lexical/extensions/MarkdownExtension'
+import { PLAYGROUND_TRANSFORMERS } from '@/lib/lexical/plugin/MarkdownTransformers'
 
 function onError(error: Error) {
   console.error('Lexical Editor Error:', error)
@@ -35,26 +37,23 @@ export function LexicalEditor() {
         AutoFocusExtension,
         HistoryExtension,
         HorizontalRuleExtension,
+        // defineExtension({
+        //   name: 'MyMarkdownExtension',
+        //   namespace: 'MyMarkdownExtension',
+        //   dependencies: [MarkdownExtension],
+        //   config: {
+        //     transformers: PLAYGROUND_TRANSFORMERS,
+        //   },
+        //   nodes: () => [EquationNode],
+        // }),
+        configExtension(MarkdownExtension, {
+          transformers: PLAYGROUND_TRANSFORMERS,
+        }),
         configExtension(ReactExtension, {
           contentEditable: <ContentEditable className="editor-content" />,
         }),
       ],
-      nodes: () => [
-        ParagraphNode,
-        TextNode,
-        HeadingNode,
-        LinkNode,
-        AutoLinkNode,
-        ListNode,
-        QuoteNode,
-        ListItemNode,
-        CodeNode,
-        CodeHighlightNode,
-        TableCellNode,
-        TableNode,
-        TableRowNode,
-        EquationNode,
-      ],
+      nodes: () => [],
       theme: modernTheme,
       onError,
     })
@@ -63,7 +62,7 @@ export function LexicalEditor() {
   return (
     <LexicalExtensionComposer extension={extension}>
       <div className="editor-wrapper">
-        <MarkdownPlugin />
+        {/* <MarkdownPlugin /> */}
         <TreeViewPlugin />
       </div>
     </LexicalExtensionComposer>
