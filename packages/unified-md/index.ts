@@ -1,4 +1,3 @@
-import fs from "node:fs/promises";
 import rehypeStringify from "rehype-stringify";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
