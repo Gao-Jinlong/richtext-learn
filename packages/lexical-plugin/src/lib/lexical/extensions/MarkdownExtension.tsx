@@ -1,11 +1,25 @@
-import { defineExtension, ParagraphNode, TextNode } from 'lexical'
+import {
+  defineExtension,
+  LexicalNodeConfig,
+  ParagraphNode,
+  safeCast,
+  TextNode,
+} from 'lexical'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { AutoLinkNode, LinkNode } from '@lexical/link'
 import { ListItemNode, ListNode } from '@lexical/list'
 import { CodeHighlightNode, CodeNode } from '@lexical/code'
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
-import { registerMarkdownShortcuts, TRANSFORMERS } from '@lexical/markdown'
-import { EquationNode } from '../node/EquationNode'
+import {
+  registerMarkdownShortcuts,
+  TRANSFORMERS,
+  type Transformer,
+} from '@lexical/markdown'
+
+interface MarkdownExtensionConfig {
+  nodes?: () => readonly LexicalNodeConfig[] | LexicalNodeConfig[]
+  transformers?: readonly Transformer[]
+}
 
 const MarkdownExtension = defineExtension({
   name: 'MarkdownExtension',
@@ -25,13 +39,25 @@ const MarkdownExtension = defineExtension({
     TableCellNode,
     TableNode,
     TableRowNode,
-    EquationNode,
   ],
-  config: {
-    transformers: TRANSFORMERS,
+  init(editorConfig, config) {
+    const nodes = []
+    if (typeof editorConfig.nodes === 'function') {
+      nodes.push(...(editorConfig.nodes() ?? []))
+    } else {
+      nodes.push(...(editorConfig.nodes ?? []))
+    }
+    if (typeof config.nodes === 'function') {
+      nodes.push(...(config.nodes() ?? []))
+    }
+    editorConfig.nodes = nodes
   },
+  config: safeCast<MarkdownExtensionConfig>({
+    nodes: () => [] as readonly LexicalNodeConfig[],
+    transformers: TRANSFORMERS,
+  }),
   afterRegistration: (editor, config) => {
-    return registerMarkdownShortcuts(editor, config.transformers)
+    return registerMarkdownShortcuts(editor, [...(config.transformers ?? [])])
   },
 })
 
