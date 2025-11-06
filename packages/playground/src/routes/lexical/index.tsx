@@ -1,7 +1,7 @@
+import { LexicalEditor } from '@/components/LexicalEditor'
 import { ClientOnly, createFileRoute } from '@tanstack/react-router'
-import { LexicalEditor } from '../components/LexicalEditor'
 
-export const Route = createFileRoute('/')({ component: HomePage })
+export const Route = createFileRoute('/lexical/')({ component: HomePage })
 
 function HomePage() {
   return (

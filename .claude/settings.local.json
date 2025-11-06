@@ -3,7 +3,10 @@
     "allow": [
       "Bash(tree:*)",
       "Bash(pnpm -F @richtext-learn/lexical-plugin add @lexical/rich-text @lexical/list @lexical/link @lexical/code @lexical/table)",
-      "Bash(pnpm dev:*)"
+      "Bash(pnpm dev:*)",
+      "Bash(npx shadcn@latest:*)",
+      "Bash(pnpm list:*)",
+      "Bash(pnpm add:*)"
     ],
     "deny": [],
     "ask": []
