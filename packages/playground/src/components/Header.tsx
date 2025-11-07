@@ -16,28 +16,25 @@ export default function Header() {
   }
 
   return (
-    <header className="border-b border-slate-200 bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 backdrop-blur supports-backdrop-filter:bg-background/60 shadow-lg">
-      <div className="container flex h-16 items-center">
-        <Link
-          to="/"
-          className="mr-8 flex items-center space-x-3 group"
-        >
-          <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-600 group-hover:to-pink-600 transition-all duration-200 shadow-lg">
+    <header className="supports-backdrop-filter:bg-background/60 h-16 shrink-0 border-b border-slate-200 bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 shadow-lg backdrop-blur">
+      <div className="flex h-full w-full items-center justify-between px-8">
+        <Link to="/" className="group mr-8 flex items-center space-x-3">
+          <div className="rounded-lg bg-linear-to-br from-purple-500 to-pink-500 p-2 shadow-lg transition-all duration-200 group-hover:from-purple-600 group-hover:to-pink-600">
             <SquareFunction className="h-5 w-5 text-white" />
           </div>
-          <span className="font-bold text-xl text-white">RichText Learn</span>
+          <span className="text-xl font-bold text-white">RichText Learn</span>
         </Link>
 
-        <NavigationMenu className="ml-auto">
+        <NavigationMenu className="">
           <NavigationMenuList className="gap-2">
             <NavigationMenuItem>
               <Link to="/">
                 <Button
-                  variant={isActive('/') ? "default" : "ghost"}
+                  variant={isActive('/') ? 'default' : 'ghost'}
                   className={`gap-2 transition-all duration-200 ${
                     isActive('/')
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                      ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:from-purple-700 hover:to-pink-700'
+                      : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
                   }`}
                 >
                   <Home className="h-4 w-4" />
@@ -49,11 +46,11 @@ export default function Header() {
             <NavigationMenuItem>
               <Link to="/lexical">
                 <Button
-                  variant={isActive('/lexical') ? "default" : "ghost"}
+                  variant={isActive('/lexical') ? 'default' : 'ghost'}
                   className={`gap-2 transition-all duration-200 ${
                     isActive('/lexical')
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-lg'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                      ? 'bg-linear-to-r from-blue-600 to-cyan-600 text-white shadow-lg hover:from-blue-700 hover:to-cyan-700'
+                      : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
                   }`}
                 >
                   <SquareFunction className="h-4 w-4" />
@@ -65,11 +62,11 @@ export default function Header() {
             <NavigationMenuItem>
               <Link to="/unified">
                 <Button
-                  variant={isActive('/unified') ? "default" : "ghost"}
+                  variant={isActive('/unified') ? 'default' : 'ghost'}
                   className={`gap-2 transition-all duration-200 ${
                     isActive('/unified')
-                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                      ? 'bg-linear-to-r from-green-600 to-emerald-600 text-white shadow-lg hover:from-green-700 hover:to-emerald-700'
+                      : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
                   }`}
                 >
                   <Network className="h-4 w-4" />

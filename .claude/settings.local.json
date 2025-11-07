@@ -6,7 +6,9 @@
       "Bash(pnpm dev:*)",
       "Bash(npx shadcn@latest:*)",
       "Bash(pnpm list:*)",
-      "Bash(pnpm add:*)"
+      "Bash(pnpm add:*)",
+      "Bash(pnpm type-check:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []
