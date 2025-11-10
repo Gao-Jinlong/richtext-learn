@@ -4,6 +4,7 @@ import {
   useRef,
   useState,
   useImperativeHandle,
+  useEffectEvent,
 } from 'react'
 
 export interface ContentEditableRef {
@@ -32,7 +33,8 @@ export const ContentEditable = forwardRef<
   ContentEditableProps
 >(({ initialValue = '', onChange, placeholder, className, ...props }, ref) => {
   const [content, setContent] = useState(initialValue)
-  const [isComposing, setIsComposing] = useState(false)
+  const isComposingRef = useRef(false)
+  const pendingUpdateRef = useRef<number | null>(null)
 
   // 合并 refs
   const mergedRef = useRef<HTMLDivElement>(null)
@@ -58,12 +60,28 @@ export const ContentEditable = forwardRef<
 
   // 处理输入事件
   const handleInput = () => {
-    if (!isComposing && mergedRef.current) {
-      const newValue = mergedRef.current.textContent || ''
-      setContent(newValue)
-      onChange?.(newValue)
+    if (!isComposingRef.current && mergedRef.current) {
+      // 取消之前待处理的更新
+      if (pendingUpdateRef.current !== null) {
+        cancelAnimationFrame(pendingUpdateRef.current)
+      }
+
+      // 使用 requestAnimationFrame 延迟更新，避免频繁触发
+      pendingUpdateRef.current = requestAnimationFrame(() => {
+        const newValue = mergedRef.current?.textContent || ''
+        setContent(newValue)
+        onChange?.(newValue)
+        pendingUpdateRef.current = null
+      })
     }
   }
+  const handleCompositionStart = useEffectEvent(() => {
+    isComposingRef.current = true
+  })
+  const handleCompositionEnd = useEffectEvent(() => {
+    isComposingRef.current = false
+    handleInput()
+  })
 
   // 处理粘贴事件，只粘贴纯文本
   const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
@@ -256,8 +274,8 @@ export const ContentEditable = forwardRef<
       onInput={handleInput}
       onKeyDown={handleKeyDown}
       onPaste={handlePaste}
-      onCompositionStart={() => setIsComposing(true)}
-      onCompositionEnd={() => setIsComposing(false)}
+      onCompositionStart={handleCompositionStart}
+      onCompositionEnd={handleCompositionEnd}
       data-placeholder={placeholder}
       spellCheck={false}
       {...props}
