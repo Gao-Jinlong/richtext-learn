@@ -1,5 +1,6 @@
 import { Eye } from 'lucide-react'
 import { PanelHeader } from './PanelHeader'
+import '../styles/markdown.css'
 
 interface HtmlPreviewProps {
   html: string
@@ -27,7 +28,7 @@ export const HtmlPreview = ({
         }
       />
       <div
-        className="prose prose-gray prose-headings:font-semibold prose-code:bg-gray-100 prose-code:px-1 prose-code:rounded prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200 max-w-none flex-1 overflow-auto p-6"
+        className="markdown-html flex-1 overflow-auto p-6"
         dangerouslySetInnerHTML={{
           __html:
             html ||
